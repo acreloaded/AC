@@ -4,7 +4,7 @@
 #include "bot/bot.h"
 
 VARP(unfairadvantage, 0, 0, 1);
-
+VARP(promotionspam, 0, 1, 1);
 int nextmode = 0;   // nextmode becomes gamemode after next map load
 VAR(gamemode, 1, 0, 0);
 VAR(nextGameMode, 1, 0, 0);

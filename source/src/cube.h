@@ -66,7 +66,7 @@ extern int verbose;
 #define AC_MASTER_RAW 0
 #define MAXCL 16
 
-extern int unfairadvantage;
+extern int unfairadvantage, promotionspam;
 
 #include "protos.h"                     // external function decls
 

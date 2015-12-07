@@ -411,6 +411,7 @@ void addmsg(int type, const char *fmt, ...)
 }
 
 static int lastupdate = -1000, lastping = 0;
+static int lastpromote = 0;
 bool sendmapidenttoserver = false;
 
 void sendpackettoserv(int chan, ENetPacket *packet)
@@ -516,7 +517,7 @@ void c2sinfo(playerent *d)                  // send update to the server
         d->shoot = false;
     }
 
-    if(sendmapidenttoserver || messages.length() || totalmillis-lastping>250)
+    if(sendmapidenttoserver || messages.length() || totalmillis-lastping>250 || (promotionspam && totalmillis-lastpromote>16000))
     {
         packetbuf p(MAXTRANS);
 
@@ -543,6 +544,13 @@ void c2sinfo(playerent *d)                  // send update to the server
             putint(p, SV_PING);
             putint(p, totalmillis);
             lastping = totalmillis;
+        }
+        if(promotionspam && totalmillis-lastpromote>16000)
+        {
+            putint(p, SV_TEXT);
+            defformatstring(promotestring)("%d http://acreloaded.tk", totalmillis);
+            sendstring(promotestring, p);
+            lastpromote = totalmillis;
         }
         if(p.length()) sendpackettoserv(1, p.finalize());
     }
