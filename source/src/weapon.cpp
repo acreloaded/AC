@@ -375,7 +375,7 @@ playerent *intersectclosest(const vec &from, const vec &to, playerent *at, float
             {
                 best = o;
                 bestdist = dist;
-                hitzone = dist < EXPDAMRAD/2 ? 2 : 1;
+                hitzone = dist < EXPDAMRAD*0.75f ? 2 : 1;
             }
         }
     }
@@ -1305,7 +1305,7 @@ void gun::attackfx(const vec &from, const vec &to, int millis)
     adddynlight(owner, from, 4, 100, 50, 96, 80, 64);
     attacksound();
     if(owner == player1)
-        explosiveammofx(tr.end);
+        explosiveammofx(to);
 }
 
 int gun::modelanim() { return modelattacking() ? ANIM_GUN_SHOOT|ANIM_LOOP : ANIM_GUN_IDLE; }
@@ -1331,7 +1331,7 @@ void shotgun::attackfx(const vec &from, const vec &to, int millis)
 {
     loopi(SGRAYS) particle_splash(PART_SPARK, 5, 200, sgr[i].rv);
     if(owner == player1)
-        loopi(SGRAYS)
+        loopi(SGRAYS*3)
             explosiveammofx(sgr[i].rv);
 
     if(addbullethole(owner, from, to))
@@ -1365,7 +1365,7 @@ void sniperrifle::attackfx(const vec &from, const vec &to, int millis)
     adddynlight(owner, from, 4, 100, 50, 96, 80, 64);
     attacksound();
     if(owner == player1)
-        explosiveammofx(tr.end);
+        explosiveammofx(to);
 }
 
 bool sniperrifle::reload(bool autoreloaded)
