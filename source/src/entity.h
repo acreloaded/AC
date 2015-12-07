@@ -629,6 +629,7 @@ public:
     ~grenadeent();
     void activate(const vec &from, const vec &to);
     void _throw(const vec &from, const vec &vel);
+    static void splasheffect(const vec &o);
     void explode();
     void splash();
     virtual void destroy();

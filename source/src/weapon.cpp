@@ -954,6 +954,12 @@ void weapon::equipplayer(playerent *pl)
 
 bool weapon::valid(int id) { return id>=0 && id<NUMGUNS; }
 
+void weapon::explosiveammofx(const vec &o)
+{
+    grenadeent::splasheffect(o);
+    addmsg(SV_THROWNADE, "ri7", int(o.x*DMF), int(o.y*DMF), int(o.z*DMF), 0, 0, 0, 2000);
+}
+
 // grenadeent
 
 enum { NS_NONE, NS_ACTIVATED = 0, NS_THROWN, NS_EXPLODED };
@@ -989,13 +995,18 @@ void grenadeent::explode()
     audiomgr.playsound(S_FEXPLODE, &o);
 }
 
-void grenadeent::splash()
+void grenadeent::splasheffect(const vec &o)
 {
     particle_splash(PART_SPARK, 50, 300, o);
     particle_fireball(PART_FIREBALL, o);
     addscorchmark(o);
     adddynlight(NULL, o, 16, 200, 100, 255, 255, 224);
     adddynlight(NULL, o, 16, 600, 600, 192, 160, 128);
+}
+
+void grenadeent::splash()
+{
+	splasheffect(o);
     if(owner == player1)
     {
         accuracym[GUN_GRENADE].shots++;
@@ -1278,6 +1289,8 @@ void gun::attackfx(const vec &from, const vec &to, int millis)
     particle_splash(PART_SPARK, 5, 250, tr.end);
     adddynlight(owner, from, 4, 100, 50, 96, 80, 64);
     attacksound();
+    if(owner == player1)
+        explosiveammofx(tr.end);
 }
 
 int gun::modelanim() { return modelattacking() ? ANIM_GUN_SHOOT|ANIM_LOOP : ANIM_GUN_IDLE; }
@@ -1302,6 +1315,9 @@ bool shotgun::attack(vec &targ)
 void shotgun::attackfx(const vec &from, const vec &to, int millis)
 {
     loopi(SGRAYS) particle_splash(PART_SPARK, 5, 200, sgr[i].rv);
+    if(owner == player1)
+        loopi(SGRAYS)
+            explosiveammofx(sgr[i].rv);
 
     if(addbullethole(owner, from, to))
         loopk(3) loopi(3) addbullethole(owner, from, sgr[k*SGRAYS+i*SGRAYS/3].rv, 0, false);
@@ -1333,6 +1349,8 @@ void sniperrifle::attackfx(const vec &from, const vec &to, int millis)
     particle_trail(PART_SMOKE, 500, from, tr.end);
     adddynlight(owner, from, 4, 100, 50, 96, 80, 64);
     attacksound();
+    if(owner == player1)
+        explosiveammofx(tr.end);
 }
 
 bool sniperrifle::reload(bool autoreloaded)

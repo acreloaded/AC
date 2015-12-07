@@ -48,6 +48,8 @@ struct weapon
     static bool valid(int id);
 
     virtual int flashtime() const;
+
+    static void explosiveammofx(const vec &o);
 };
 
 class grenadeent;
