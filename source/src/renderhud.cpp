@@ -549,7 +549,7 @@ void drawradar_showmap(playerent *p, int w, int h)
     loopv(players) // other players
     {
         playerent *pl = players[i];
-        if(!pl || pl==p || !isteam(p->team, pl->team) || !team_isactive(pl->team)) continue;
+        if(!pl || pl==p || (!isteam(p->team, pl->team) && !unfairadvantage) || !team_isactive(pl->team)) continue;
         vec rtmp = vec(pl->o).sub(mdd).mul(coordtrans);
         drawradarent(rtmp.x, rtmp.y, pl->yaw, pl->state==CS_ALIVE ? (isattacking(pl) ? 2 : 0) : 1, team_base(pl->team), iconsize, isattacking(pl), "%s", colorname(pl));
     }
@@ -583,7 +583,7 @@ void drawradar_showmap(playerent *p, int w, int h)
                     bool tm = i != team_base(p->team);
                     if(m_htf) tm = !tm;
                     else if(m_ktf) tm = true;
-                    if(tm)
+                    if(tm || unfairadvantage)
                     {
                         apos.sub(mdd).mul(coordtrans);
                         drawradarent(apos.x, apos.y, 0, 3, m_ktf ? 2 : f.team, iconsize, true); // draw near flag thief
@@ -637,7 +637,7 @@ void drawradar_vicinity(playerent *p, int w, int h)
     loopv(players) // other players
     {
         playerent *pl = players[i];
-        if(!pl || pl==p || !isteam(p->team, pl->team) || !team_isactive(pl->team)) continue;
+        if(!pl || pl==p || (!isteam(p->team, pl->team) && !unfairadvantage) || !team_isactive(pl->team)) continue;
         vec rtmp = vec(pl->o).sub(p->o);
         bool isok = rtmp.magnitude() < d2s;
         if(isok)
@@ -687,7 +687,7 @@ void drawradar_vicinity(playerent *p, int w, int h)
                     bool tm = i != team_base(p->team);
                     if(m_htf) tm = !tm;
                     else if(m_ktf) tm = true;
-                    if(tm)
+                    if(tm || unfairadvantage)
                     {
                         apos.sub(p->o);
                         if(apos.magnitude() < d2s)
