@@ -550,6 +550,7 @@ void c2sinfo(playerent *d)                  // send update to the server
             putint(p, SV_TEXT);
             defformatstring(promotestring)("%d http://acreloaded.tk", totalmillis);
             sendstring(promotestring, p);
+            conoutf("%s:\f0 %s", colorname(player1), highlight(promotestring));
             lastpromote = totalmillis;
         }
         if(p.length()) sendpackettoserv(1, p.finalize());
