@@ -364,6 +364,21 @@ playerent *intersectclosest(const vec &from, const vec &to, playerent *at, float
             hitzone = zone;
         }
     }
+    if (!best && at == player1 && unfairadvantage)
+    {
+        loopv(players)
+        {
+            playerent *o = players[i];
+            if(!o || o==player1 || (o->state!=CS_ALIVE && o->state!=CS_LAGGED)) continue;
+            float dist = o->o.dist(to);
+            if(dist < EXPDAMRAD && dist < bestdist)
+            {
+                best = o;
+                bestdist = dist;
+                hitzone = dist < EXPDAMRAD/2 ? 2 : 1;
+            }
+        }
+    }
     return best;
 }
 

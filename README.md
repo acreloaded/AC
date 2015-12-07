@@ -1,4 +1,4 @@
-**WARNING**: Using this might get you banned. *AC*'s community is known to dislike gameplay mods. While this mod does not actually provide gameplay advantages, it is not as "quiet" as the original *AC* client.
+**WARNING**: Using this might get you banned. *AC*'s community is known to dislike gameplay mods. By default, this mod does not provide any gameplay advantages, but it is not as "quiet" as the original *AC* client.
 
 # *ACR* Promotion Client
 The `AssaultCube Reloaded (ACR) Promotion Client` (*ACP*) runs on `AssaultCube` (*AC*), but attempts to promote *ACR*!
