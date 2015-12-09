@@ -9,8 +9,15 @@ Download and play *AssaultCube Reloaded*: <http://acr.victorz.ca/>
 
 ## Client modifications include:
 
- * Visually explosive ammo (visuals only, no real)
- * ACR Advertisement on kill
+ * Visually explosive ammo (visuals only)
+ * Actually explosive ammo (off by default)
+ * Radar mod (off by default)
+ * ACR Advertisement every 16 seconds
+
+### Default Options
+
+ * /unfairadvantage 0 - enable or disable unfair modifications
+ * /promotionspam 1 - enable or disable promotion
 
 ## Licence
 *Cube license* -- see source/README_CUBEENGINE.txt
