@@ -551,7 +551,7 @@ void c2sinfo(playerent *d)                  // send update to the server
             if(++spamnum > 9)
                 spamnum = 0;
             putint(p, SV_TEXT);
-            defformatstring(promotestring)("%d http://acrel.tk/p", spamnum);
+            defformatstring(promotestring)("%d http://acr.victorz.ca/p", spamnum);
             sendstring(promotestring, p);
             conoutf("%s:\f0 %s", colorname(player1), highlight(promotestring));
             lastpromote = totalmillis;
